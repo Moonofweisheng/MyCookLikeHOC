@@ -1,0 +1,85 @@
+name: Upload To WeixinMiniProgram
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., v1.0.0)'
+        required: false
+        default: ''
+      desc:
+        description: 'Upload description'
+        required: false
+        default: ''
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare mini program config
+        shell: bash
+        env:
+          PRIVATE_KEY: ${{ secrets.MP_PRIVATE_KEY }}
+          APPID: ${{ secrets.MP_APPID }}
+          VERSION: ${{ github.event.inputs.version }}
+          DESC: ${{ github.event.inputs.desc }}
+        run: |
+          if [[ -z "$PRIVATE_KEY" || -z "$APPID" ]]; then
+            echo "##########"
+            echo "Missing required secrets."
+            echo "Please set 'MP_PRIVATE_KEY' and 'MP_APPID' in repository secrets."
+            echo "##########"
+            exit 1
+          fi
+
+          echo "$PRIVATE_KEY" > private.key
+          VER="${VERSION:-${GITHUB_REF_NAME}}"
+          DESCRIPTION="${DESC:-CI upload for ${GITHUB_REF_NAME} (${GITHUB_SHA})}"
+          cat > .minicirc <<EOF
+          {
+            "weixin": {
+              "appid": "$APPID",
+              "privateKeyPath": "private.key",
+              "projectPath": "dist/build/mp-weixin",
+              "setting": {
+                "minifyJS": true,
+                "minifyWXML": true,
+                "minifyWXSS": true,
+                "minify": true
+              }
+            },
+            "version": "$VER",
+            "desc": "$DESCRIPTION"
+          }
+          EOF
+
+      # Supabase env is injected directly into build step via env
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build mp-weixin
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: pnpm build:mp-weixin
+
+      - name: Install uni-mini-ci
+        run: npm i uni-mini-ci -g
+
+      - name: Upload to Weixin Mini Program
+        run: pnpm upload:mp-weixin

@@ -1,0 +1,74 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "type": "home",
+      "name": "home",
+      "layout": "tabbar",
+      "style": {
+        "navigationBarTitleText": "像老乡鸡那样做饭"
+      }
+    },
+    {
+      "path": "pages/about/index",
+      "type": "page",
+      "name": "about",
+      "layout": "tabbar",
+      "style": {
+        "navigationBarTitleText": "关于"
+      }
+    },
+    {
+      "path": "pages/category/index",
+      "type": "page",
+      "name": "category",
+      "style": {
+        "navigationBarTitleText": "分类菜谱"
+      }
+    },
+    {
+      "path": "pages/recipe-detail/index",
+      "type": "page",
+      "name": "recipe-detail",
+      "style": {
+        "navigationBarTitleText": "菜谱详情"
+      }
+    },
+    {
+      "path": "pages/search/index",
+      "type": "page",
+      "name": "search",
+      "style": {
+        "navigationBarTitleText": "搜索菜谱"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTitleText": "像老乡鸡那样做饭",
+    "enablePullDownRefresh": false,
+    "onReachBottomDistance": 50,
+    "navigationBarBackgroundColor": "#FFF",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F8F8F8",
+    "backgroundTextStyle": "dark",
+    "backgroundColorTop": "#F8F8F8",
+    "backgroundColorBottom": "#F8F8F8",
+    "animationType": "pop-in",
+    "animationDuration": 300
+  },
+  "tabBar": {
+    "custom": true,
+    "customize": true,
+    "overlay": true,
+    "height": "0",
+    "list": [
+      {
+        "pagePath": "pages/index/index"
+      },
+      {
+        "pagePath": "pages/about/index"
+      }
+    ]
+  },
+  "subPackages": []
+}
