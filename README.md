@@ -14,6 +14,12 @@
 - 后端数据与文件存储由 Supabase 提供：数据库迁移、RPC、Storage 图标与流程图。
 - 内置脚本可从 `cook-book/` 目录的 Markdown 解析菜谱，导入到数据库，并上传所需图片到 Storage。
 
+## 小程序在线体验
+
+<p align="center">
+    <img alt="logo" src="images/cook.jpg" width="200">
+</p>
+
 ## 声明与致谢
 
 - 本项目并非任何商家官方仓库，仅用于学习与技术交流。
