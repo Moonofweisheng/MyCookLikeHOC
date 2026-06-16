@@ -10,6 +10,14 @@ withDefaults(defineProps<Props>(), {
 })
 </script>
 
+<script lang="ts">
+export default {
+  options: {
+    virtualHost: true,
+  },
+}
+</script>
+
 <template>
   <view
     v-if="variant === 'feature'"

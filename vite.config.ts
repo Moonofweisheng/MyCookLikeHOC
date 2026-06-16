@@ -36,9 +36,6 @@ export default defineConfig({
         }
       : undefined,
   },
-  esbuild: {
-    target: 'es2015',
-  },
   optimizeDeps: {
     exclude: ['@wot-ui/ui', 'uni-echarts'],
   },

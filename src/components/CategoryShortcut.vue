@@ -42,6 +42,14 @@ watch(() => props.iconUrl, () => {
 })
 </script>
 
+<script lang="ts">
+export default {
+  options: {
+    virtualHost: true,
+  },
+}
+</script>
+
 <template>
   <view class="category-shortcut cook-pressable flex flex-col items-center gap-12rpx" @click="$emit('select')">
     <view

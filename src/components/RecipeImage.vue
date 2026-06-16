@@ -27,6 +27,14 @@ watch(() => props.src, () => {
 })
 </script>
 
+<script lang="ts">
+export default {
+  options: {
+    virtualHost: true,
+  },
+}
+</script>
+
 <template>
   <view class="recipe-image relative flex items-center justify-center overflow-hidden bg-[var(--cook-image-bg)]">
     <image

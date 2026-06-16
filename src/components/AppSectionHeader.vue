@@ -11,6 +11,14 @@ defineEmits<{
 }>()
 </script>
 
+<script lang="ts">
+export default {
+  options: {
+    virtualHost: true,
+  },
+}
+</script>
+
 <template>
   <view class="mb-24rpx flex items-end justify-between gap-24rpx">
     <view class="min-w-0">

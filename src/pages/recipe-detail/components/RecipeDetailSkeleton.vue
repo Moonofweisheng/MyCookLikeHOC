@@ -3,6 +3,14 @@ import RecipeCardSkeleton from '@/components/RecipeCardSkeleton.vue'
 import SkeletonBlock from '@/components/SkeletonBlock.vue'
 </script>
 
+<script lang="ts">
+export default {
+  options: {
+    virtualHost: true,
+  },
+}
+</script>
+
 <template>
   <view class="bg-[var(--cook-bg)] pb-56rpx">
     <SkeletonBlock height="540rpx" radius="0" />

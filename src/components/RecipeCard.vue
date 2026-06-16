@@ -36,6 +36,14 @@ const summary = computed(() => {
 const preset = computed(() => props.variant === 'mini' ? 'THUMBNAIL' : 'RECIPE_COVER')
 </script>
 
+<script lang="ts">
+export default {
+  options: {
+    virtualHost: true,
+  },
+}
+</script>
+
 <template>
   <view
     v-if="variant === 'feature'"

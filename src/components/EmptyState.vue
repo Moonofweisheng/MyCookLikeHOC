@@ -17,6 +17,14 @@ defineEmits<{
 }>()
 </script>
 
+<script lang="ts">
+export default {
+  options: {
+    virtualHost: true,
+  },
+}
+</script>
+
 <template>
   <view class="empty-state flex flex-col items-center justify-center px-48rpx py-120rpx text-center">
     <view class="empty-icon mb-28rpx h-108rpx w-108rpx flex items-center justify-center rounded-full">

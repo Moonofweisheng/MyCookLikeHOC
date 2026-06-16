@@ -37,6 +37,7 @@ function main() {
     'src/pages/search/index.vue',
     'src/pages/recipe-detail/index.vue',
     'src/pages/about/index.vue',
+    'src/layouts/tabbar.vue',
     '.codex/skills/cook-illustration-ui/SKILL.md',
   ]
 
@@ -66,6 +67,9 @@ function main() {
   assertIncludes('src/pages/recipe-detail/index.vue', 'detail-cover cook-illo-card mx-24rpx h-500rpx')
   assertIncludes('src/pages/recipe-detail/index.vue', 'ingredient-chip')
   assertIncludes('src/pages/about/index.vue', 'about-card cook-illo-card')
+  assertIncludes('src/layouts/tabbar.vue', 'cook-tabbar-item')
+  assertIncludes('src/layouts/tabbar.vue', 'tabbar-icon-shell')
+  assertIncludes('src/layouts/tabbar.vue', '--wot-tabbar-height')
   assertIncludes('src/components/RecipeCard.vue', 'category-sticker')
   assertIncludes('src/components/CategoryShortcut.vue', 'category-icon')
   assertIncludes('src/components/EmptyState.vue', 'empty-action')

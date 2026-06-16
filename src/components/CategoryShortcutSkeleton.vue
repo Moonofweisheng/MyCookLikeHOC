@@ -2,6 +2,14 @@
 import SkeletonBlock from '@/components/SkeletonBlock.vue'
 </script>
 
+<script lang="ts">
+export default {
+  options: {
+    virtualHost: true,
+  },
+}
+</script>
+
 <template>
   <view class="flex flex-col items-center gap-12rpx">
     <view class="category-skeleton-icon">
