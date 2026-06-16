@@ -25,6 +25,20 @@ import { WotResolver } from './src/resolver'
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
+  build: {
+    target: 'es2015',
+    minify: isMpWeixin ? 'terser' : undefined,
+    terserOptions: isMpWeixin
+      ? {
+          format: {
+            keep_numbers: true,
+          },
+        }
+      : undefined,
+  },
+  esbuild: {
+    target: 'es2015',
+  },
   optimizeDeps: {
     exclude: ['@wot-ui/ui', 'uni-echarts'],
   },
