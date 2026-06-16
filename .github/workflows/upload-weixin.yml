@@ -79,7 +79,7 @@ jobs:
         run: pnpm build:mp-weixin
 
       - name: Install uni-mini-ci
-        run: npm i uni-mini-ci -g
+        run: npm i uni-mini-ci less@4.5.1 -g
 
       - name: Upload to Weixin Mini Program
         run: pnpm upload:mp-weixin
