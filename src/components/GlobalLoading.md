@@ -2,7 +2,7 @@
 
 ## 概述
 
-GlobalLoading 是基于 `wot-design-uni` 的 `wd-toast` 组件封装的全局加载组件，可以结合`axios`、`alova`等请求库使用，显示加载状态，通过 Pinia 状态管理实现全局调用，用于显示数据加载、操作处理等场景的等待状态。
+GlobalLoading 是基于 `@wot-ui/ui` 的 `wd-toast` 组件封装的全局加载组件，可以结合`axios`、`alova`等请求库使用，显示加载状态，通过 Pinia 状态管理实现全局调用，用于显示数据加载、操作处理等场景的等待状态。
 
 ## 组件特性
 

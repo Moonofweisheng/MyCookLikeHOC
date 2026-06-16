@@ -35,7 +35,14 @@ export default {
 <template>
   <slot />
   <wd-tabbar
-    :model-value="activeTabbar.name" bordered safe-area-inset-bottom placeholder fixed active-color="#E17944"
+    :model-value="activeTabbar.name"
+    bordered
+    safe-area-inset-bottom
+    placeholder
+    fixed
+    active-color="var(--cook-primary)"
+    inactive-color="var(--cook-text-muted)"
+    custom-class="cook-tabbar"
     @change="handleTabbarChange"
   >
     <wd-tabbar-item
@@ -45,3 +52,11 @@ export default {
     />
   </wd-tabbar>
 </template>
+
+<style scoped>
+:deep(.cook-tabbar) {
+  border-top: 4rpx solid var(--cook-ink);
+  background: rgba(255, 254, 249, 0.96);
+  box-shadow: 0 -6rpx 0 rgba(47, 47, 45, 0.12);
+}
+</style>

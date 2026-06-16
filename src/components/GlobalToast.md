@@ -2,7 +2,7 @@
 
 ## 概述
 
-GlobalToast 是基于 `wot-design-uni` 的 `wd-toast` 组件封装的全局提示组件，通过 Pinia 状态管理实现全局调用。
+GlobalToast 是基于 `@wot-ui/ui` 的 `wd-toast` 组件封装的全局提示组件，通过 Pinia 状态管理实现全局调用。
 
 ## 组件特性
 

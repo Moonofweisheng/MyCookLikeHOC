@@ -1,4 +1,5 @@
 import { presetUni } from '@uni-helper/unocss-preset-uni'
+import { presetWot } from '@wot-ui/unocss-preset'
 
 import {
   defineConfig,
@@ -10,9 +11,13 @@ import {
 export default defineConfig({
   presets: [
     presetUni({
-      attributify: {
-        prefixedOnly: true,
+      attributify: false,
+      uno: {
+        preflight: false,
       },
+    }),
+    presetWot({
+      preflight: false,
     }),
     presetIcons({
       scale: 1.2,

@@ -15,8 +15,7 @@ function run(cmd: string) {
     console.log(`$ ${cmd}`)
     execSync(cmd, { stdio: 'inherit' })
   }
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  catch (e) {
+  catch {
     console.error(`命令执行失败: ${cmd}`)
   }
 }

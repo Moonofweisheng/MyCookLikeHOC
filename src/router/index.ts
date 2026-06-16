@@ -1,5 +1,8 @@
 /// <reference types="@uni-helper/vite-plugin-uni-pages/client" />
+import { type NavigationGuard, type NavigationHookAfter, createRouter } from '@wot-ui/router'
 import { pages, subPackages } from 'virtual:uni-pages'
+import { useGlobalDialog } from '@/composables/useGlobalDialog'
+import { useGlobalToast } from '@/composables/useGlobalToast'
 
 function generateRoutes() {
   const routes = pages.map((page) => {
@@ -21,7 +24,7 @@ function generateRoutes() {
 const router = createRouter({
   routes: generateRoutes(),
 })
-router.beforeEach((to, from, next) => {
+const beforeEachGuard: NavigationGuard = (to, from, next) => {
   console.log('🚀 beforeEach 守卫触发:', { to, from })
 
   // 演示：基本的导航日志记录
@@ -31,7 +34,7 @@ router.beforeEach((to, from, next) => {
 
   // 演示：对受保护页面的简单拦截
   if (to.name === 'demo-protected') {
-    const { confirm: showConfirm } = useGlobalMessage()
+    const { confirm: showConfirm } = useGlobalDialog()
     console.log('🛡️ 检测到访问受保护页面')
 
     return new Promise<void>((resolve, reject) => {
@@ -56,9 +59,9 @@ router.beforeEach((to, from, next) => {
 
   // 继续导航
   next()
-})
+}
 
-router.afterEach((to, from) => {
+const afterEachHook: NavigationHookAfter = (to, from) => {
   console.log('🎯 afterEach 钩子触发:', { to, from })
 
   // 演示：简单的页面切换记录
@@ -74,6 +77,9 @@ router.afterEach((to, from) => {
       showToast('afterEach 钩子已触发！')
     }, 500)
   }
-})
+}
+
+router.beforeEach(beforeEachGuard)
+router.afterEach(afterEachHook)
 
 export default router

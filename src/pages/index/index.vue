@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { type Recipe, getCategoryList, getDailyRecommendedRecipes } from '../../api/modules/recipe'
+import { type Category, type Recipe, getCategoryList, getDailyRecommendedRecipes } from '../../api/modules/recipe'
+import AppSectionHeader from '@/components/AppSectionHeader.vue'
+import CategoryShortcut from '@/components/CategoryShortcut.vue'
+import CategoryShortcutSkeleton from '@/components/CategoryShortcutSkeleton.vue'
+import EmptyState from '@/components/EmptyState.vue'
+import RecipeCard from '@/components/RecipeCard.vue'
+import RecipeCardSkeleton from '@/components/RecipeCardSkeleton.vue'
 
 definePage({
   name: 'home',
@@ -14,32 +20,18 @@ const router = useRouter()
 // 推荐菜谱数据
 const recommendedRecipes = ref<Recipe[]>([])
 // 分类数据 - 后端返回 {category, icon_url} 对象数组
-const categories = ref<{ category: string, icon_url: string }[]>([])
-const categoryPages = computed(() => {
-  const arr = categories.value || []
-  const pages: Array<{ category: string, icon_url: string }[]> = []
-  for (let i = 0; i < arr.length; i += 8) {
-    pages.push(arr.slice(i, i + 8))
-  }
-  return pages
-})
-
-const current = ref(0)
-const swiperList = computed(() => categoryPages.value)
-
-function handleClick() {}
-function onChange(val: number) {
-  current.value = val
-}
+const categories = ref<Category[]>([])
+const featuredRecipe = computed(() => recommendedRecipes.value[0])
+const secondaryRecipes = computed(() => recommendedRecipes.value.slice(1))
 
 // 获取推荐菜谱
 const today = computed(() => new Date().toISOString().slice(0, 10))
-const { loading: recommendLoading, data: recommendData, send: fetchRecommended } = useRequest(() => getDailyRecommendedRecipes({ date: today.value }), {
+const { loading: recommendLoading, data: recommendData, error: recommendError, send: fetchRecommended } = useRequest(() => getDailyRecommendedRecipes({ date: today.value }), {
   immediate: true,
 })
 
 // 获取分类列表
-const { loading: categoryLoading, data: categoryData, send: fetchCategories } = useRequest(getCategoryList, {
+const { loading: categoryLoading, data: categoryData, error: categoryError, send: fetchCategories } = useRequest(getCategoryList, {
   immediate: true,
 })
 
@@ -59,16 +51,16 @@ watch(categoryData, (data) => {
 // 跳转到菜谱详情
 function goToRecipeDetail(recipe: Recipe) {
   router.push({
-    name: 'recipe-detail',
-    params: { id: recipe.id },
+    path: '/pages/recipe-detail/index',
+    query: { id: recipe.id },
   })
 }
 
 // 跳转到分类页面
-function goToCategory(categoryItem: { category: string, icon_url: string }) {
+function goToCategory(categoryItem: Category) {
   router.push({
-    name: 'category',
-    params: { category: categoryItem.category },
+    path: '/pages/category/index',
+    query: { category: categoryItem.category },
   })
 }
 
@@ -101,146 +93,165 @@ onShareTimeline(() => {
 </script>
 
 <template>
-  <view class="min-h-screen bg-gray-50">
-    <!-- 搜索栏 -->
-    <view class="bg-white px-32rpx py-24rpx shadow-sm">
+  <view class="home-page min-h-screen bg-[var(--cook-bg)] pb-152rpx pt-24rpx">
+    <view class="home-hero cook-illo-card mx-24rpx px-28rpx pb-30rpx pt-28rpx">
+      <view class="mb-26rpx flex items-end justify-between gap-24rpx">
+        <view class="min-w-0">
+          <text class="home-eyebrow mb-12rpx inline-block text-22rpx font-900">
+            今日菜单
+          </text>
+          <text class="block text-44rpx text-[var(--cook-text)] font-900 leading-tight">
+            今天想做点什么？
+          </text>
+          <text class="mt-12rpx block text-26rpx text-[var(--cook-text-soft)] leading-relaxed">
+            找一道顺手的老乡鸡同款做法
+          </text>
+        </view>
+        <view class="hero-badge h-82rpx w-82rpx flex shrink-0 items-center justify-center rounded-full">
+          <text class="text-30rpx text-[var(--cook-ink)] font-900">
+            做
+          </text>
+        </view>
+      </view>
+
       <view
-        class="flex items-center rounded-full bg-gray-100 px-32rpx py-20rpx"
+        class="home-search cook-pressable flex items-center px-24rpx py-20rpx"
         @click="goToSearch"
       >
-        <wd-icon name="search" size="32rpx" color="#999" />
-        <text class="ml-16rpx text-28rpx text-gray-500">
-          搜索菜谱...
+        <view class="search-icon h-48rpx w-48rpx flex shrink-0 items-center justify-center rounded-full">
+          <wd-icon name="search" size="30rpx" color="var(--cook-ink)" />
+        </view>
+        <text class="ml-18rpx flex-1 text-28rpx text-[var(--cook-text-muted)]">
+          搜索菜名、食材
+        </text>
+        <text class="search-action rounded-10rpx px-18rpx py-8rpx text-23rpx text-[var(--cook-ink)] font-900">
+          搜索
         </text>
       </view>
     </view>
 
-    <!-- 主要内容 -->
-    <scroll-view
-      scroll-y
-      class="flex-1"
-    >
-      <!-- 分类导航 -->
-      <view class="mb-20rpx bg-white px-32rpx py-32rpx">
-        <view class="mb-24rpx flex items-center justify-between">
-          <text class="text-32rpx text-gray-800 font-bold">
-            菜品分类
-          </text>
-        </view>
+    <view class="px-32rpx pt-32rpx">
+      <AppSectionHeader title="今日推荐" subtitle="每天换一组，少想一点吃什么" />
 
-        <view v-if="categoryLoading" class="grid grid-cols-4 gap-24rpx">
-          <view
-            v-for="n in 8"
-            :key="n"
-            class="flex flex-col items-center rounded-16rpx bg-gray-50 p-24rpx"
-          >
-            <wd-skeleton :row-col="[{ size: '80rpx', type: 'circle' }]" animation="gradient" :custom-style="{ width: '80rpx', height: '80rpx' }" />
-            <wd-skeleton :row-col="[{ width: '60%', height: '24rpx', marginTop: '16rpx' }]" animation="gradient" />
-          </view>
-        </view>
-
-        <wd-swiper
-          v-else
-          v-model:current="current"
-          :list="swiperList"
-          :autoplay="false"
-          :indicator="{ type: 'dots-bar' }"
-          custom-class="h-440rpx"
-          @click="handleClick"
-          @change="onChange"
-        >
-          <template #default="{ item }">
-            <view class="grid grid-cols-4 w-full gap-24rpx">
-              <view
-                v-for="categoryItem in item"
-                :key="categoryItem.category"
-                class="flex flex-col items-center rounded-16rpx bg-gray-50 p-24rpx"
-                @click="goToCategory(categoryItem)"
-              >
-                <view class="mb-16rpx h-80rpx w-80rpx flex items-center justify-center overflow-hidden rounded-full bg-orange-100">
-                  <image
-                    :src="applyImagePreset(categoryItem.icon_url, 'CATEGORY_ICON')"
-                    class="h-full w-full object-cover"
-                    mode="aspectFill"
-                    :lazy-load="true"
-                  />
-                </view>
-                <text class="text-center text-24rpx text-gray-700">
-                  {{ categoryItem.category }}
-                </text>
-              </view>
-            </view>
-          </template>
-        </wd-swiper>
+      <view v-if="recommendLoading" class="space-y-22rpx">
+        <RecipeCardSkeleton variant="feature" />
+        <RecipeCardSkeleton
+          v-for="n in 2"
+          :key="n"
+          variant="horizontal"
+        />
       </view>
-
-      <!-- 推荐菜谱 -->
-      <view class="bg-white px-32rpx py-32rpx">
-        <view class="mb-24rpx flex items-center justify-between">
-          <text class="text-32rpx text-gray-800 font-bold">
-            今日推荐
-          </text>
-        </view>
-
-        <view v-if="recommendLoading" class="space-y-24rpx">
-          <view
-            v-for="n in 3"
-            :key="n"
-            class="flex overflow-hidden rounded-16rpx bg-gray-50"
-          >
-            <view class="h-250rpx w-200rpx bg-gray-200">
-              <wd-skeleton :row-col="[{ width: '200rpx', height: '250rpx' }]" animation="gradient" />
-            </view>
-            <view class="flex-1 p-24rpx">
-              <wd-skeleton
-                :row-col="[
-                  { width: '60%', height: '28rpx' },
-                  { width: '40%', height: '24rpx', marginTop: '12rpx' },
-                  { width: '100%', height: '24rpx', marginTop: '16rpx' },
-                ]" animation="gradient"
-              />
-            </view>
-          </view>
-        </view>
-
-        <view v-else class="space-y-24rpx">
-          <view
-            v-for="recipe in recommendedRecipes"
-            :key="recipe.id"
-            class="flex overflow-hidden rounded-16rpx bg-gray-50"
-            @click="goToRecipeDetail(recipe)"
-          >
-            <!-- 菜谱图片 -->
-            <view class="h-250rpx w-200rpx flex items-center justify-center bg-gray-200">
-              <image
-                v-if="recipe.cover_image"
-                :src="applyImagePreset(recipe.cover_image, 'RECIPE_COVER')"
-                class="h-full w-full object-cover"
-                mode="aspectFill"
-                :lazy-load="true"
-              />
-              <text v-else class="text-48rpx">
-                🍽️
-              </text>
-            </view>
-
-            <!-- 菜谱信息 -->
-            <view class="flex-1 p-24rpx">
-              <text class="mb-8rpx block text-28rpx text-gray-800 font-medium">
-                {{ recipe.title }}
-              </text>
-              <text class="mb-16rpx block text-24rpx text-gray-500">
-                {{ recipe.category }}
-              </text>
-              <text class="line-clamp-2 text-24rpx text-gray-600">
-                {{ recipe.ingredients.slice(0, 50) }}...
-              </text>
-            </view>
-          </view>
-        </view>
+      <view v-else-if="featuredRecipe" class="space-y-22rpx">
+        <RecipeCard :recipe="featuredRecipe" variant="feature" @select="goToRecipeDetail" />
+        <RecipeCard
+          v-for="recipe in secondaryRecipes.slice(0, 3)"
+          :key="recipe.id"
+          :recipe="recipe"
+          variant="horizontal"
+          @select="goToRecipeDetail"
+        />
       </view>
+      <EmptyState
+        v-else
+        :title="recommendError ? '今日推荐加载失败' : '今日还没有推荐'"
+        :description="recommendError ? '网络开了小差，重新试试' : '稍后再回来看看'"
+        icon="search"
+        action-text="重新加载"
+        @action="fetchRecommended"
+      />
+    </view>
 
-      <!-- 底部间距 -->
-    </scroll-view>
+    <view class="mt-44rpx px-32rpx">
+      <AppSectionHeader title="菜品分类" subtitle="按做法和菜系快速找菜" />
+
+      <view v-if="categoryLoading" class="grid grid-cols-4 gap-x-22rpx gap-y-28rpx">
+        <CategoryShortcutSkeleton
+          v-for="n in 8"
+          :key="n"
+        />
+      </view>
+      <EmptyState
+        v-else-if="categoryError || categories.length === 0"
+        :title="categoryError ? '分类加载失败' : '暂无分类'"
+        :description="categoryError ? '重新加载后继续找菜' : '分类整理中'"
+        icon="search"
+        action-text="重新加载"
+        @action="fetchCategories"
+      />
+      <view v-else class="grid grid-cols-4 gap-x-22rpx gap-y-30rpx">
+        <CategoryShortcut
+          v-for="(categoryItem, index) in categories"
+          :key="categoryItem.category"
+          :category="categoryItem.category"
+          :icon-url="categoryItem.icon_url"
+          :tone="index"
+          @select="goToCategory(categoryItem)"
+        />
+      </view>
+    </view>
+
+    <view v-if="secondaryRecipes.length > 3" class="mt-44rpx px-32rpx">
+      <AppSectionHeader title="继续看看" subtitle="从今日推荐里再挑几道" />
+      <view class="space-y-22rpx">
+        <RecipeCard
+          v-for="recipe in secondaryRecipes.slice(3)"
+          :key="recipe.id"
+          :recipe="recipe"
+          variant="horizontal"
+          @select="goToRecipeDetail"
+        />
+      </view>
+    </view>
   </view>
 </template>
+
+<style scoped>
+.home-page {
+  background:
+    linear-gradient(90deg, rgba(47, 47, 45, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(47, 47, 45, 0.035) 1px, transparent 1px),
+    linear-gradient(135deg, #fff6f7 0%, #fffdf2 46%, #f1fbff 100%);
+  background-size:
+    44rpx 44rpx,
+    44rpx 44rpx,
+    100% 100%;
+}
+
+.home-hero {
+  background:
+    linear-gradient(135deg, rgba(255, 254, 249, 0.98) 0%, rgba(240, 255, 217, 0.9) 100%);
+}
+
+.home-eyebrow {
+  border: 4rpx solid var(--cook-ink);
+  border-radius: 999rpx;
+  background: var(--cook-yellow);
+  padding: 5rpx 16rpx;
+  color: var(--cook-ink);
+}
+
+.hero-badge {
+  border: 5rpx solid var(--cook-ink);
+  background: var(--cook-primary);
+  box-shadow: 5rpx 6rpx 0 rgba(47, 47, 45, 0.96);
+}
+
+.home-search {
+  box-sizing: border-box;
+  min-height: 92rpx;
+  border: 5rpx solid var(--cook-ink);
+  border-radius: 24rpx;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 5rpx 6rpx 0 rgba(47, 47, 45, 0.96);
+}
+
+.search-icon {
+  border: 4rpx solid var(--cook-ink);
+  background: var(--cook-blue-soft);
+}
+
+.search-action {
+  border: 4rpx solid var(--cook-ink);
+  background: var(--cook-primary);
+}
+</style>

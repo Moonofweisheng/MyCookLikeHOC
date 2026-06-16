@@ -1,16 +1,23 @@
 <script setup lang="ts">
-// 移除暗黑模式相关代码
+import type { ConfigProviderProps } from '@wot-ui/ui/components/wd-config-provider/types'
+import { useManualTheme } from '@/composables/useManualTheme'
+
+const { themeVars, theme } = useManualTheme()
+
+const buttonConfig: ConfigProviderProps['button'] = {
+  size: 'large',
+}
 </script>
 
 <template>
-  <wd-config-provider custom-class="page-wraper">
+  <wd-config-provider :theme-vars="themeVars" :theme="theme" :button="buttonConfig" :custom-class="`page-wraper ${theme}`">
     <ku-root-view />
     <wd-notify />
-    <wd-message-box />
+    <wd-dialog />
     <wd-toast />
     <global-loading />
     <global-toast />
-    <global-message />
+    <global-dialog />
     <!-- #ifdef MP-WEIXIN -->
     <privacy-popup />
     <!-- #endif -->

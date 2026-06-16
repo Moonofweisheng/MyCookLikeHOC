@@ -1,5 +1,5 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "baseUrl": ".",
@@ -11,7 +11,6 @@
       "@mini-types/alipay",
       "miniprogram-api-typings",
       "@uni-helper/uni-types",
-      "wot-design-uni/global",
       "uni-echarts/global"
     ],
     "sourceMap": true
@@ -24,8 +23,6 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
-    "src/**/*.vue",
-    "async-import.d.ts",
-    "async-component.d.ts"
+    "src/**/*.vue"
   ]
 }

@@ -123,7 +123,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'wot-design-uni/components/wd-button/index.scss';
+@use '@wot-ui/ui/components/wd-button/index.scss';
 :deep(.wd-privacy-popup) {
   width: 600rpx;
   padding: 0 24rpx;

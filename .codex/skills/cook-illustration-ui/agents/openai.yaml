@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Cook Illustration UI'
+  short_description: '老乡鸡菜谱项目的插画风界面实践指南'
+  default_prompt: 'Use $cook-illustration-ui to extend the illustrated UI style across a cook-cook page.'

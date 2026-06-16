@@ -75,7 +75,6 @@ async function verifyProcessImages() {
 if (require.main === module) {
   verifyProcessImages().catch((error) => {
     console.error('验证脚本执行失败:', error)
-    // eslint-disable-next-line node/prefer-global/process
     process.exit(1)
   })
 }

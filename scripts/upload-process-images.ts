@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable node/prefer-global/process */
 import fs from 'node:fs'
 import path from 'node:path'
 import { createClient } from '@supabase/supabase-js'
@@ -141,6 +140,10 @@ function sanitizePath(text: string) {
 /**
  * 上传图片到Supabase Storage
  * @param {object} imageFile 图片文件信息
+ * @param {string} imageFile.fullPath 图片完整路径
+ * @param {string} imageFile.category 图片所属分类
+ * @param {string} imageFile.fileName 图片文件名
+ * @param {string} imageFile.extension 图片扩展名
  * @returns {Promise<string|null>} 上传后的公共URL或null
  */
 async function uploadImageToStorage(imageFile: { fullPath: string, category: string, fileName: string, extension: string }) {

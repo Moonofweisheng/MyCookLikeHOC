@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable node/prefer-global/process */
 import fs from 'node:fs'
 import path from 'node:path'
 import { createClient } from '@supabase/supabase-js'
@@ -196,6 +195,12 @@ function findMarkdownFiles(dir: string) {
 /**
  * 上传菜谱数据到Supabase
  * @param {object} recipe 菜谱数据
+ * @param {string} recipe.title 菜谱标题
+ * @param {string} recipe.category 菜谱分类
+ * @param {string} recipe.ingredients 菜谱配料
+ * @param {string} recipe.steps 制作步骤
+ * @param {string|null} recipe.coverImage 封面图片base64数据
+ * @param {string} recipe.imagePath 原始图片路径
  * @returns {Promise<boolean>} 上传是否成功
  */
 async function uploadRecipe(recipe: { title: string, category: string, ingredients: string, steps: string, coverImage: string | null, imagePath: string }) {

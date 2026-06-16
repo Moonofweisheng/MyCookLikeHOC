@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { type Recipe, type SearchParams, getCategoryRecipeCount, getRecipeList } from '../../api/modules/recipe'
-import { applyImagePreset } from '../../utils/image'
+import AppSectionHeader from '@/components/AppSectionHeader.vue'
+import EmptyState from '@/components/EmptyState.vue'
+import RecipeCard from '@/components/RecipeCard.vue'
+import RecipeCardSkeleton from '@/components/RecipeCardSkeleton.vue'
 
 definePage({
   name: 'category',
@@ -13,7 +16,7 @@ const router = useRouter()
 const route = useRoute()
 
 // 获取分类参数
-const category = computed(() => decodeURIComponent(route.params?.category as string || ''))
+const category = ref('')
 
 // 菜谱列表数据
 const recipes = ref<Recipe[]>([])
@@ -22,13 +25,54 @@ const hasMore = ref(true)
 const page = ref(1)
 const limit = 20
 const totalCount = ref<number>(0)
+const loadError = ref('')
+
+function normalizeRouteValue(value: unknown) {
+  const rawValue = Array.isArray(value) ? value[0] : value
+  if (!rawValue)
+    return ''
+
+  return decodeURIComponent(String(rawValue))
+}
+
+function getCategoryFromLocation() {
+  if (typeof window === 'undefined')
+    return ''
+
+  try {
+    const url = new URL(window.location.href)
+    const searchCategory = url.searchParams.get('category')
+    if (searchCategory)
+      return decodeURIComponent(searchCategory)
+
+    const hashQuery = url.hash.includes('?') ? url.hash.split('?')[1] : ''
+    return decodeURIComponent(new URLSearchParams(hashQuery).get('category') || '')
+  }
+  catch {
+    return ''
+  }
+}
+
+function resolveCategory(options?: Record<string, unknown>) {
+  return normalizeRouteValue(options?.category)
+    || normalizeRouteValue(route.query?.category)
+    || normalizeRouteValue(route.params?.category)
+    || getCategoryFromLocation()
+}
+
+function syncCategory(options?: Record<string, unknown>) {
+  const nextCategory = resolveCategory(options)
+  if (nextCategory && nextCategory !== category.value)
+    category.value = nextCategory
+}
 
 // 获取菜谱列表
 async function fetchRecipes(isRefresh = false) {
-  if (loading.value)
+  if (loading.value || !category.value)
     return
 
   loading.value = true
+  loadError.value = ''
 
   try {
     const requestPage = isRefresh ? 1 : page.value
@@ -55,6 +99,7 @@ async function fetchRecipes(isRefresh = false) {
   }
   catch (error) {
     console.error('获取菜谱列表失败:', error)
+    loadError.value = '菜谱列表加载失败'
     uni.showToast({
       title: '加载失败',
       icon: 'error',
@@ -94,28 +139,45 @@ onPullDownRefresh(() => {
 // 跳转到菜谱详情
 function goToRecipeDetail(recipe: Recipe) {
   router.push({
-    name: 'recipe-detail',
-    params: { id: recipe.id },
+    path: '/pages/recipe-detail/index',
+    query: { id: recipe.id },
   })
 }
 
-// 页面加载时获取数据
-onMounted(() => {
+function refreshCategoryData() {
+  recipes.value = []
+  page.value = 1
+  hasMore.value = true
+  loadError.value = ''
   fetchRecipes(true)
   fetchCount()
+}
+
+onLoad((options) => {
+  syncCategory(options as Record<string, unknown>)
 })
 
-// // 监听分类变化
-// watch(category, () => {
-//   recipes.value = []
-//   page.value = 1
-//   hasMore.value = true
-//   fetchRecipes(true)
-//   fetchCount()
-// })
+watch(category, () => {
+  refreshCategoryData()
+})
+
+watch(() => [route.query?.category, route.params?.category], () => {
+  syncCategory()
+})
+
+onMounted(() => {
+  syncCategory()
+  if (category.value && recipes.value.length === 0 && !loading.value)
+    refreshCategoryData()
+})
 
 async function fetchCount() {
   try {
+    if (!category.value) {
+      totalCount.value = 0
+      return
+    }
+
     const res = await getCategoryRecipeCount(category.value)
     totalCount.value = Array.isArray(res) && res[0]?.count ? Number(res[0].count) : 0
   }
@@ -125,127 +187,115 @@ async function fetchCount() {
 }
 
 onShareAppMessage(() => {
+  const encodedCategory = encodeURIComponent(category.value)
   return {
     title: `${category.value} 菜谱`,
-    path: `/pages/category/index?category=${category.value}`,
+    path: encodedCategory ? `/pages/category/index?category=${encodedCategory}` : '/pages/category/index',
   }
 })
 
 onShareTimeline(() => {
+  const encodedCategory = encodeURIComponent(category.value)
   return {
     title: `${category.value} 菜谱`,
-    path: `/pages/category/index?category=${category.value}`,
+    path: encodedCategory ? `/pages/category/index?category=${encodedCategory}` : '/pages/category/index',
   }
 })
 </script>
 
 <template>
-  <view class="min-h-screen bg-gray-50">
-    <!-- 分类标题 -->
-    <view class="border-b border-gray-100 bg-white px-32rpx py-32rpx">
-      <text class="text-36rpx text-gray-800 font-bold">
-        {{ category }}
-      </text>
-      <text class="mt-8rpx block text-24rpx text-gray-500">
-        共 {{ totalCount }} 道菜谱
-      </text>
-    </view>
-
-    <!-- 菜谱列表 -->
-    <view class="flex-1">
-      <view class="px-32rpx py-24rpx">
-        <!-- 加载状态 -->
-        <view v-if="loading && recipes.length === 0" class="grid grid-cols-2 gap-24rpx">
-          <view
-            v-for="n in 6"
-            :key="n"
-            class="overflow-hidden rounded-16rpx bg-white shadow-sm"
-          >
-            <view class="h-240rpx w-full bg-gray-200">
-              <wd-skeleton :row-col="[{ height: '240rpx' }]" animation="gradient" :custom-style="{ width: '100%' }" />
-            </view>
-            <view class="p-24rpx">
-              <wd-skeleton :row-col="[{ width: '70%', height: '28rpx' }, { width: '100%', height: '24rpx', marginTop: '8rpx' }]" animation="gradient" />
-            </view>
-          </view>
-        </view>
-
-        <!-- 菜谱网格 -->
-        <view v-else class="grid grid-cols-2 gap-24rpx">
-          <view
-            v-for="recipe in recipes"
-            :key="recipe.id"
-            class="overflow-hidden rounded-16rpx bg-white shadow-sm"
-            @click="goToRecipeDetail(recipe)"
-          >
-            <!-- 菜谱图片 -->
-            <view class="h-240rpx w-full flex items-center justify-center bg-gray-200">
-              <image
-                v-if="recipe.cover_image"
-                :src="applyImagePreset(recipe.cover_image, 'RECIPE_COVER')"
-                class="h-full w-full object-cover"
-                mode="aspectFill"
-                :lazy-load="true"
-              />
-              <text v-else class="text-64rpx">
-                🍽️
-              </text>
-            </view>
-
-            <!-- 菜谱信息 -->
-            <view class="p-24rpx">
-              <text class="line-clamp-1 mb-8rpx block text-28rpx text-gray-800 font-medium">
-                {{ recipe.title }}
-              </text>
-              <text class="line-clamp-2 text-24rpx text-gray-500">
-                {{ recipe.ingredients.slice(0, 30) }}...
-              </text>
-            </view>
-          </view>
-        </view>
-
-        <!-- 加载更多状态 -->
-        <view v-if="loading && recipes.length > 0" class="px-32rpx py-40rpx">
-          <view class="grid grid-cols-2 gap-24rpx">
-            <view
-              v-for="n in 2"
-              :key="n"
-              class="overflow-hidden rounded-16rpx bg-white shadow-sm"
-            >
-              <view class="h-240rpx w-full bg-gray-200">
-                <wd-skeleton :row-col="[{ height: '240rpx' }]" animation="gradient" :custom-style="{ width: '100%' }" />
-              </view>
-              <view class="p-24rpx">
-                <wd-skeleton :row-col="[{ width: '70%', height: '28rpx' }, { width: '100%', height: '24rpx', marginTop: '8rpx' }]" animation="gradient" />
-              </view>
-            </view>
-          </view>
-        </view>
-
-        <!-- 没有更多数据 -->
-        <view v-else-if="!hasMore && recipes.length > 0" class="flex justify-center py-40rpx">
-          <text class="text-24rpx text-gray-400">
-            没有更多菜谱了
+  <view class="cook-illo-page pb-120rpx">
+    <view class="category-hero cook-illo-card mx-24rpx mt-24rpx px-28rpx py-30rpx">
+      <view class="flex items-start justify-between gap-24rpx">
+        <view class="min-w-0 flex-1">
+          <text class="cook-illo-tag mb-16rpx inline-block px-14rpx py-5rpx text-22rpx font-900">
+            分类
+          </text>
+          <text class="block text-44rpx text-[var(--cook-text)] font-900 leading-tight">
+            {{ category }}
+          </text>
+          <text class="mt-12rpx block text-26rpx text-[var(--cook-text-soft)] leading-relaxed">
+            慢慢挑一道顺手的老乡鸡同款做法
           </text>
         </view>
-
-        <!-- 空状态 -->
-        <view v-if="!loading && recipes.length === 0" class="flex flex-col items-center justify-center py-120rpx">
-          <text class="mb-24rpx text-96rpx">
-            🍽️
+        <view class="count-badge flex shrink-0 flex-col items-center justify-center">
+          <text class="text-34rpx text-[var(--cook-ink)] font-900">
+            {{ totalCount }}
           </text>
-          <text class="text-28rpx text-gray-500">
-            暂无菜谱
+          <text class="text-20rpx text-[var(--cook-ink)] font-800">
+            道菜
           </text>
         </view>
       </view>
+    </view>
 
-      <!-- 底部间距 -->
-      <view class="h-120rpx" />
+    <view class="px-32rpx py-32rpx">
+      <AppSectionHeader title="菜谱列表" subtitle="按最近整理顺序展示" />
+
+      <view v-if="loading && recipes.length === 0" class="grid grid-cols-2 gap-22rpx">
+        <RecipeCardSkeleton
+          v-for="n in 6"
+          :key="n"
+          variant="grid"
+        />
+      </view>
+
+      <EmptyState
+        v-else-if="loadError && recipes.length === 0"
+        title="菜谱列表加载失败"
+        description="重新加载后继续挑菜"
+        icon="search"
+        action-text="重新加载"
+        @action="refreshCategoryData"
+      />
+
+      <view v-else-if="recipes.length > 0" class="grid grid-cols-2 gap-22rpx">
+        <RecipeCard
+          v-for="recipe in recipes"
+          :key="recipe.id"
+          :recipe="recipe"
+          variant="grid"
+          @select="goToRecipeDetail"
+        />
+      </view>
+
+      <view v-if="loading && recipes.length > 0" class="grid grid-cols-2 gap-22rpx pt-22rpx">
+        <RecipeCardSkeleton
+          v-for="n in 2"
+          :key="n"
+          variant="grid"
+        />
+      </view>
+
+      <view v-else-if="!hasMore && recipes.length > 0" class="flex justify-center py-44rpx">
+        <text class="cook-illo-status px-20rpx py-12rpx text-24rpx text-[var(--cook-text-soft)] font-700">
+          没有更多菜谱了
+        </text>
+      </view>
+
+      <EmptyState
+        v-if="!loading && recipes.length === 0"
+        title="暂无菜谱"
+        description="换个分类看看"
+        icon="search"
+      />
     </view>
   </view>
 </template>
 
 <style scoped>
+.category-hero {
+  background:
+    linear-gradient(135deg, rgba(255, 254, 249, 0.98) 0%, rgba(240, 255, 217, 0.9) 100%);
+}
 
+.count-badge {
+  box-sizing: border-box;
+  width: 108rpx;
+  height: 108rpx;
+  border: 5rpx solid var(--cook-ink);
+  border-radius: 999rpx;
+  background: var(--cook-primary);
+  box-shadow: 5rpx 6rpx 0 rgba(47, 47, 45, 0.96);
+}
 </style>
