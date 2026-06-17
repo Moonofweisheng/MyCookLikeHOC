@@ -11,7 +11,7 @@ definePage({
   name: 'home',
   layout: 'tabbar',
   style: {
-    navigationBarTitleText: '像老乡鸡那样做饭',
+    navigationBarTitleText: '鱼哥菜谱',
   },
 })
 
@@ -79,14 +79,14 @@ function onRefresh() {
 
 onShareAppMessage(() => {
   return {
-    title: '像老乡鸡那样做饭小程序，你一定能像老乡鸡一样会做饭！',
+    title: '鱼哥菜谱：家常菜照着做，今天吃什么不用愁',
     path: '/pages/index/index',
   }
 })
 
 onShareTimeline(() => {
   return {
-    title: '像老乡鸡那样做饭小程序，你一定能像老乡鸡一样会做饭！',
+    title: '鱼哥菜谱：家常菜照着做，今天吃什么不用愁',
     path: '/pages/index/index',
   }
 })
@@ -104,7 +104,7 @@ onShareTimeline(() => {
             今天想做点什么？
           </text>
           <text class="mt-12rpx block text-26rpx text-[var(--cook-text-soft)] leading-relaxed">
-            找一道顺手的老乡鸡同款做法
+            找一道鱼哥菜谱里的顺手做法
           </text>
         </view>
         <view class="hero-badge h-82rpx w-82rpx flex shrink-0 items-center justify-center rounded-full">

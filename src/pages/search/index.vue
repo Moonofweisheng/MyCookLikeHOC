@@ -271,7 +271,7 @@ onMounted(() => {
 onShareAppMessage(() => {
   const nextKeyword = searchedKeyword.value || keyword.value.trim()
   return {
-    title: nextKeyword ? `搜索 ${nextKeyword} 菜谱` : '搜索菜谱',
+    title: nextKeyword ? `鱼哥菜谱：搜索 ${nextKeyword} 做法` : '鱼哥菜谱：搜索菜谱',
     path: nextKeyword ? `/pages/search/index?keyword=${encodeURIComponent(nextKeyword)}` : '/pages/search/index',
   }
 })
@@ -279,7 +279,7 @@ onShareAppMessage(() => {
 onShareTimeline(() => {
   const nextKeyword = searchedKeyword.value || keyword.value.trim()
   return {
-    title: nextKeyword ? `搜索 ${nextKeyword} 菜谱` : '搜索菜谱',
+    title: nextKeyword ? `鱼哥菜谱：搜索 ${nextKeyword} 做法` : '鱼哥菜谱：搜索菜谱',
     path: nextKeyword ? `/pages/search/index?keyword=${encodeURIComponent(nextKeyword)}` : '/pages/search/index',
   }
 })

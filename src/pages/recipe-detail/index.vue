@@ -200,7 +200,7 @@ onMounted(() => {
 onShareAppMessage(() => {
   const encodedRecipeId = encodeURIComponent(recipeId.value)
   return {
-    title: recipe.value?.title || '菜谱详情',
+    title: recipe.value?.title ? `鱼哥菜谱：${recipe.value.title}` : '鱼哥菜谱：菜谱详情',
     path: encodedRecipeId ? `/pages/recipe-detail/index?id=${encodedRecipeId}` : '/pages/recipe-detail/index',
   }
 })
@@ -208,7 +208,7 @@ onShareAppMessage(() => {
 onShareTimeline(() => {
   const encodedRecipeId = encodeURIComponent(recipeId.value)
   return {
-    title: recipe.value?.title || '菜谱详情',
+    title: recipe.value?.title ? `鱼哥菜谱：${recipe.value.title}` : '鱼哥菜谱：菜谱详情',
     path: encodedRecipeId ? `/pages/recipe-detail/index?id=${encodedRecipeId}` : '/pages/recipe-detail/index',
   }
 })
@@ -236,7 +236,7 @@ onShareTimeline(() => {
             {{ recipe.category }}
           </text>
           <text class="text-22rpx text-[var(--cook-text-soft)] font-700">
-            老乡鸡同款做法
+            鱼哥菜谱精选
           </text>
         </view>
         <text class="block text-42rpx text-[var(--cook-text)] font-900 leading-tight">

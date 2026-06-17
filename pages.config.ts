@@ -14,7 +14,7 @@ export default defineUniPages({
   ],
   globalStyle: {
     // 导航栏配置
-    navigationBarTitleText: '像老乡鸡那样做饭',
+    navigationBarTitleText: '鱼哥菜谱',
     // 下拉刷新配置
     enablePullDownRefresh: false,
     onReachBottomDistance: 50,

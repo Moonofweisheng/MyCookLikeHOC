@@ -9,8 +9,8 @@ definePage({
     navigationBarTitleText: '关于',
   },
 })
-const appName = '像老乡鸡那样做饭'
-const appDesc = '本菜谱数据来自于开源项目 CookLikeHOC ，基于 uni-app 快速上手项目 wot-starter 全程由 TRAE SOLO 开发'
+const appName = '鱼哥菜谱'
+const appDesc = '收集整理家常菜谱、配料与步骤，帮你更快决定今天吃什么、照着做什么。'
 const version = pkg.version
 const { show: showToast } = useGlobalToast()
 const { show: showDialog } = useGlobalDialog()

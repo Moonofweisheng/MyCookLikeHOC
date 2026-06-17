@@ -189,7 +189,7 @@ async function fetchCount() {
 onShareAppMessage(() => {
   const encodedCategory = encodeURIComponent(category.value)
   return {
-    title: `${category.value} 菜谱`,
+    title: category.value ? `鱼哥菜谱：${category.value} 做法合集` : '鱼哥菜谱：分类菜谱',
     path: encodedCategory ? `/pages/category/index?category=${encodedCategory}` : '/pages/category/index',
   }
 })
@@ -197,7 +197,7 @@ onShareAppMessage(() => {
 onShareTimeline(() => {
   const encodedCategory = encodeURIComponent(category.value)
   return {
-    title: `${category.value} 菜谱`,
+    title: category.value ? `鱼哥菜谱：${category.value} 做法合集` : '鱼哥菜谱：分类菜谱',
     path: encodedCategory ? `/pages/category/index?category=${encodedCategory}` : '/pages/category/index',
   }
 })
@@ -215,7 +215,7 @@ onShareTimeline(() => {
             {{ category }}
           </text>
           <text class="mt-12rpx block text-26rpx text-[var(--cook-text-soft)] leading-relaxed">
-            慢慢挑一道顺手的老乡鸡同款做法
+            慢慢挑一道鱼哥菜谱里的顺手做法
           </text>
         </view>
         <view class="count-badge flex shrink-0 flex-col items-center justify-center">

@@ -1,6 +1,6 @@
 {
   "globalStyle": {
-    "navigationBarTitleText": "像老乡鸡那样做饭",
+    "navigationBarTitleText": "鱼哥菜谱",
     "enablePullDownRefresh": false,
     "onReachBottomDistance": 50,
     "navigationBarBackgroundColor": "#FFF",
@@ -20,7 +20,7 @@
       "name": "home",
       "layout": "tabbar",
       "style": {
-        "navigationBarTitleText": "像老乡鸡那样做饭"
+        "navigationBarTitleText": "鱼哥菜谱"
       }
     },
     {
