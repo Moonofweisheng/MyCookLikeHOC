@@ -38,7 +38,7 @@ function main() {
     'src/pages/recipe-detail/index.vue',
     'src/pages/about/index.vue',
     'src/layouts/tabbar.vue',
-    '.codex/skills/cook-illustration-ui/SKILL.md',
+    '.agents/skills/cook-illustration-ui/SKILL.md',
   ]
 
   requiredFiles.forEach(assertFile)
@@ -51,12 +51,12 @@ function main() {
   assertIncludes('src/App.vue', 'cook-illo-card')
   assertIncludes('src/App.vue', 'cook-illo-page')
   assertIncludes('src/App.vue', 'cook-illo-button')
-  assertIncludes('.codex/skills/cook-illustration-ui/SKILL.md', 'cook-illo-card')
-  assertIncludes('.codex/skills/cook-illustration-ui/SKILL.md', 'New Page Checklist')
-  assertIncludes('.codex/skills/cook-illustration-ui/SKILL.md', 'Component Rules')
-  assertIncludes('.codex/skills/cook-illustration-ui/SKILL.md', 'State Patterns')
-  assertIncludes('.codex/skills/cook-illustration-ui/SKILL.md', 'Mini-Program Compatibility')
-  assertIncludes('.codex/skills/cook-illustration-ui/SKILL.md', 'Recipe detail')
+  assertIncludes('.agents/skills/cook-illustration-ui/SKILL.md', 'cook-illo-card')
+  assertIncludes('.agents/skills/cook-illustration-ui/SKILL.md', 'New Page Checklist')
+  assertIncludes('.agents/skills/cook-illustration-ui/SKILL.md', 'Component Rules')
+  assertIncludes('.agents/skills/cook-illustration-ui/SKILL.md', 'State Patterns')
+  assertIncludes('.agents/skills/cook-illustration-ui/SKILL.md', 'Mini-Program Compatibility')
+  assertIncludes('.agents/skills/cook-illustration-ui/SKILL.md', 'Recipe detail')
   assertIncludes('src/pages/index/index.vue', 'home-hero cook-illo-card')
   assertIncludes('src/pages/index/index.vue', 'home-search cook-pressable')
   assertIncludes('src/pages/search/index.vue', 'search-hero cook-illo-card')
@@ -67,6 +67,9 @@ function main() {
   assertIncludes('src/pages/recipe-detail/index.vue', 'detail-cover cook-illo-card mx-24rpx h-500rpx')
   assertIncludes('src/pages/recipe-detail/index.vue', 'ingredient-chip')
   assertIncludes('src/pages/about/index.vue', 'about-card cook-illo-card')
+  assertIncludes('src/pages/about/index.vue', 'Moonofweisheng/MyCookLikeHOC')
+  assertIncludes('src/pages/about/index.vue', 'repo-action cook-pressable')
+  assertIncludes('src/pages/about/index.vue', 'openSourceRepository')
   assertIncludes('src/layouts/tabbar.vue', 'cook-tabbar-item')
   assertIncludes('src/layouts/tabbar.vue', 'tabbar-icon-shell')
   assertIncludes('src/layouts/tabbar.vue', '--wot-tabbar-height')
