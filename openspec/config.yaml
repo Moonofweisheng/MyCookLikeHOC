@@ -1,0 +1,67 @@
+schema: spec-driven
+
+context: |
+  语言：简体中文。
+  所有提案、设计、任务和规格正文使用简体中文；文件路径、代码标识符、命令及 OpenSpec
+  结构关键字（ADDED/MODIFIED/REMOVED/RENAMED、Requirement、Scenario、
+  GIVEN/WHEN/THEN/AND）保留英文。
+
+  项目：鱼哥菜谱，一个基于公开菜谱数据的跨平台浏览应用。
+  核心能力：每日推荐、分类浏览、关键词搜索、菜谱详情和相关推荐。
+
+  技术栈：uni-app、Vue 3 Composition API、TypeScript、Vite、wot-ui、UnoCSS、
+  Pinia、Alova、Supabase（Postgres、RLS、RPC、Storage）。
+  包管理器：pnpm。Node.js 版本要求见 package.json 的 engines 字段。
+  主要目标端：H5 和微信小程序；设计不得默认依赖仅浏览器可用的 API。
+
+  代码边界：
+  - 页面位于 src/pages，并通过 definePage 声明页面配置。
+  - 通用 UI 位于 src/components；通用状态与行为位于 src/store 和 src/composables。
+  - API 类型和请求封装位于 src/api；Supabase 客户端配置位于 src/config/supabase.ts。
+  - 数据库变更以新的、顺序编号的 SQL 文件写入 supabase/migrations，禁止改写已应用迁移。
+  - cook-book 是菜谱源数据；导入、上传和校验逻辑位于 scripts。
+  - pages.json、类型声明等生成文件应通过现有工具链更新，不手工维护重复来源。
+
+  工程约定：
+  - 优先复用现有组件、composable、API 封装和插画式 UI 规范。
+  - Vue 组件使用 <script setup lang="ts"> 和 Composition API，保持严格的 TypeScript 类型。
+  - 网络功能必须定义加载、成功、空数据、失败及重试/恢复行为。
+  - 任何凭据都不得写入仓库；SUPABASE_SERVICE_KEY 只能用于 Node 脚本，不能暴露到前端。
+  - 公共行为和数据契约优先保持向后兼容；破坏性变更必须给出迁移与回滚方案。
+
+  验证命令：
+  - pnpm type-check
+  - pnpm lint
+  - pnpm build:h5（涉及构建、路由、配置或跨模块变更时）
+  - pnpm smoke:ui（涉及页面、导航或交互时）
+  - 数据或迁移变更使用对应的 setup/verify 脚本，并说明所需环境变量。
+
+rules:
+  proposal:
+    - 明确问题、目标、非目标、用户可观察结果和受影响平台
+    - 标出兼容性、数据迁移、安全、隐私和外部依赖影响；不适用时明确说明
+    - 范围应足够小，能够独立实现、验证和归档
+  specs:
+    - 每条 Requirement 至少包含一个可验证的 Scenario
+    - Scenario 使用 GIVEN/WHEN/THEN/AND 描述外部可观察行为，不写实现细节
+    - 异步用户流程必须覆盖适用的加载、空数据、失败和恢复场景
+    - 涉及多端时明确 H5 与小程序的一致行为及允许的差异
+  design:
+    - 说明受影响模块、数据流、接口或表结构，以及关键取舍
+    - 复用现有模式；引入新依赖或新抽象时说明必要性
+    - 包含测试策略，并在有部署或数据风险时包含迁移与回滚方案
+  tasks:
+    - 按可验证的实现增量拆分任务，并使用编号复选框
+    - 将测试、类型检查、lint、必要构建和人工验收列为显式任务
+    - 数据库、Storage 或数据脚本变更必须包含迁移和校验任务
+
+operations:
+  apply:
+    guidance:
+      - 严格按 tasks.md 实施，并在每项完成且验证后更新复选框
+      - 先运行与改动直接相关的检查，再运行配置中适用的完整验证命令
+      - 发现规格与实现冲突时暂停编码，先更新 OpenSpec 产出物
+  archive:
+    guidance:
+      - 归档前确认任务已完成、适用验证已通过且 delta specs 已同步
+      - 在归档结果中记录未执行的验证、已知限制和后续工作

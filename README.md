@@ -85,6 +85,58 @@ pnpm run setup:verify     # 数据质量与样本校验
 pnpm dev
 ```
 
+## SDD 与 OpenSpec 开发流程
+
+本项目使用 [OpenSpec](https://github.com/Fission-AI/OpenSpec) 实行 SDD（Spec-Driven Development）。功能、行为、公共接口、数据模型和架构变更必须先形成可评审规格，再进入编码。
+
+首次参与开发时，请先安装并验证 OpenSpec CLI（要求 Node.js 20.19.0 或更高版本）：
+
+```bash
+npm install -g @fission-ai/openspec@1.9.0
+openspec --version
+```
+
+在 Codex 中使用以下流程：
+
+```text
+$openspec-explore              # 可选：梳理模糊需求与现有实现
+$openspec-propose "变更描述"   # 生成 proposal/specs/design/tasks
+$openspec-apply-change         # 按已确认的规格实施并完成任务
+$openspec-verify-change        # 独立核对规格、实现、测试和任务
+$openspec-archive-change       # Verify 通过后归档并同步系统规格
+```
+
+`$openspec-sync-specs` 仅在需要保留 active change、但提前更新主规格时使用，不属于默认主流程。
+
+规格文件位于 `openspec/`：
+
+- `openspec/specs/`：已交付行为的事实来源。
+- `openspec/changes/`：进行中的提案、增量规格、技术设计与任务清单。
+- `openspec/changes/archive/`：已完成变更的审计记录。
+- `openspec/config.yaml`：项目技术栈、边界、产出规则和验证要求。
+
+常用终端检查：
+
+```bash
+openspec list
+openspec show <change-name>
+openspec validate <change-name> --strict
+```
+
+升级 OpenSpec 时必须同步刷新项目技能，避免 CLI 与仓库内生成文件版本不一致：
+
+```bash
+OPENSPEC_TARGET_VERSION=1.9.0 # 替换为要升级到的版本
+npm install -g "@fission-ai/openspec@${OPENSPEC_TARGET_VERSION}"
+openspec --version
+openspec update
+git diff -- .agents/skills
+```
+
+审查并提交生成文件后，重新加载 IDE 以启用更新后的技能。
+
+这是存量项目，采用增量规格策略：不一次性反向补写整个系统，只为正在发生的真实变更创建 delta specs，并在归档时逐步沉淀到主规格。
+
 ## 数据库与存储
 
 - 迁移文件位于 `supabase/migrations/`：
