@@ -49,6 +49,11 @@ page {
   --cook-blue-soft: #eaf4ff;
   --cook-yellow: #ffd95c;
   --cook-yellow-soft: #fff8d9;
+  --cook-skeleton-text: #eee5da;
+  --cook-skeleton-image: #e8dfd2;
+  --cook-skeleton-avatar: #eadfce;
+  --cook-skeleton-highlight: rgba(255, 254, 249, 0.7);
+  --cook-skeleton-duration: 2s;
   --cook-radius-illo: 28rpx;
   --wot-color-theme: var(--cook-primary);
   --wot-swiper-nav-dot-active-color: rgba(131, 198, 63, 0.86);

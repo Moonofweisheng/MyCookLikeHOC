@@ -3,12 +3,14 @@ interface Props {
   width?: string
   height?: string
   radius?: string
+  variant?: 'text' | 'image' | 'avatar'
 }
 
 withDefaults(defineProps<Props>(), {
   width: '100%',
   height: '24rpx',
   radius: '8rpx',
+  variant: 'text',
 })
 </script>
 
@@ -23,6 +25,7 @@ export default {
 <template>
   <view
     class="skeleton-block"
+    :class="`skeleton-block--${variant}`"
     :style="{ width, height, borderRadius: radius }"
   />
 </template>
@@ -32,30 +35,31 @@ export default {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  border: 3rpx solid rgba(47, 47, 45, 0.18);
-  background:
-    linear-gradient(90deg, rgba(255, 244, 184, 0.62) 0%, rgba(234, 244, 255, 0.9) 42%, rgba(236, 255, 217, 0.76) 78%);
-  background-size: 240% 100%;
-  animation: cook-skeleton-wave 1.5s ease-in-out infinite;
+  background: var(--cook-skeleton-text);
+}
+
+.skeleton-block--image {
+  background: var(--cook-skeleton-image);
+  box-shadow: inset 0 0 0 2rpx rgba(47, 47, 45, 0.08);
+}
+
+.skeleton-block--avatar {
+  background: var(--cook-skeleton-avatar);
+  box-shadow: inset 0 0 0 2rpx rgba(47, 47, 45, 0.1);
 }
 
 .skeleton-block::after {
   position: absolute;
   inset: 0;
   content: '';
-  background:
-    linear-gradient(90deg, rgba(47, 47, 45, 0.04) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(47, 47, 45, 0.04) 1px, transparent 1px);
-  background-size: 28rpx 28rpx;
+  background: linear-gradient(90deg, transparent 0%, var(--cook-skeleton-highlight) 50%, transparent 100%);
+  transform: translateX(-100%);
+  animation: cook-skeleton-wave var(--cook-skeleton-duration) ease-in-out infinite;
 }
 
 @keyframes cook-skeleton-wave {
-  0% {
-    background-position: 120% 0;
-  }
-
   100% {
-    background-position: -120% 0;
+    transform: translateX(100%);
   }
 }
 </style>

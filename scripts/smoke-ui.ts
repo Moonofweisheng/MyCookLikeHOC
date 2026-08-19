@@ -22,6 +22,13 @@ function assertIncludes(relativePath: string, expected: string) {
   }
 }
 
+function assertNotIncludes(relativePath: string, unexpected: string) {
+  const source = read(relativePath)
+  if (source.includes(unexpected)) {
+    throw new Error(`${relativePath} 不应包含旧视觉片段: ${unexpected}`)
+  }
+}
+
 function main() {
   const requiredFiles = [
     'src/components/AppSectionHeader.vue',
@@ -51,6 +58,11 @@ function main() {
   assertIncludes('src/App.vue', 'cook-illo-card')
   assertIncludes('src/App.vue', 'cook-illo-page')
   assertIncludes('src/App.vue', 'cook-illo-button')
+  assertIncludes('src/App.vue', '--cook-skeleton-text')
+  assertIncludes('src/App.vue', '--cook-skeleton-image')
+  assertIncludes('src/App.vue', '--cook-skeleton-avatar')
+  assertIncludes('src/App.vue', '--cook-skeleton-highlight')
+  assertIncludes('src/App.vue', '--cook-skeleton-duration')
   assertIncludes('.agents/skills/cook-illustration-ui/SKILL.md', 'cook-illo-card')
   assertIncludes('.agents/skills/cook-illustration-ui/SKILL.md', 'New Page Checklist')
   assertIncludes('.agents/skills/cook-illustration-ui/SKILL.md', 'Component Rules')
@@ -77,8 +89,20 @@ function main() {
   assertIncludes('src/components/CategoryShortcut.vue', 'category-icon')
   assertIncludes('src/components/EmptyState.vue', 'empty-action')
   assertIncludes('src/components/SkeletonBlock.vue', 'cook-skeleton-wave')
+  assertIncludes('src/components/SkeletonBlock.vue', 'variant?: \'text\' | \'image\' | \'avatar\'')
+  assertIncludes('src/components/SkeletonBlock.vue', 'skeleton-block--image')
+  assertIncludes('src/components/SkeletonBlock.vue', 'skeleton-block--avatar')
+  assertNotIncludes('src/components/SkeletonBlock.vue', 'background-size: 28rpx 28rpx')
+  assertNotIncludes('src/components/SkeletonBlock.vue', 'rgba(255, 244, 184, 0.62)')
+  assertNotIncludes('src/components/SkeletonBlock.vue', 'rgba(234, 244, 255, 0.9)')
+  assertNotIncludes('src/components/SkeletonBlock.vue', 'rgba(236, 255, 217, 0.76)')
   assertIncludes('src/components/RecipeCardSkeleton.vue', 'SkeletonBlock')
+  assertIncludes('src/components/RecipeCardSkeleton.vue', 'variant="image"')
+  assertIncludes('src/components/RecipeCardSkeleton.vue', 'variant="text"')
+  assertIncludes('src/components/CategoryShortcutSkeleton.vue', 'variant="avatar"')
   assertIncludes('src/pages/recipe-detail/components/RecipeDetailSkeleton.vue', 'SkeletonBlock')
+  assertIncludes('src/pages/recipe-detail/components/RecipeDetailSkeleton.vue', 'variant="image"')
+  assertIncludes('src/pages/recipe-detail/components/RecipeDetailSkeleton.vue', 'variant="avatar"')
   assertIncludes('src/pages/index/index.vue', 'CategoryShortcutSkeleton')
 
   assertIncludes('src/pages/recipe-detail/index.vue', 'getRecipeIdFromLocation')

@@ -13,9 +13,9 @@ export default {
 <template>
   <view class="flex flex-col items-center gap-12rpx">
     <view class="category-skeleton-icon">
-      <SkeletonBlock width="88rpx" height="88rpx" radius="20rpx" />
+      <SkeletonBlock width="88rpx" height="88rpx" radius="20rpx" variant="avatar" />
     </view>
-    <SkeletonBlock width="56rpx" height="22rpx" radius="6rpx" />
+    <SkeletonBlock width="56rpx" height="22rpx" radius="6rpx" variant="text" />
   </view>
 </template>
 

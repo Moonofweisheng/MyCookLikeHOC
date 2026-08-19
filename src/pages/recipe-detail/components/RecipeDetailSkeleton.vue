@@ -13,7 +13,7 @@ export default {
 
 <template>
   <view class="bg-[var(--cook-bg)] pb-56rpx">
-    <SkeletonBlock height="540rpx" radius="0" />
+    <SkeletonBlock height="540rpx" radius="0" variant="image" />
 
     <view class="bg-[var(--cook-surface)] px-32rpx pb-32rpx pt-30rpx">
       <view class="mb-18rpx flex items-center gap-12rpx">
@@ -53,7 +53,7 @@ export default {
           :key="item"
           class="flex gap-22rpx border-b border-[var(--cook-border)] py-26rpx last:border-b-0"
         >
-          <SkeletonBlock width="54rpx" height="54rpx" radius="999rpx" />
+          <SkeletonBlock width="54rpx" height="54rpx" radius="999rpx" variant="avatar" />
           <view class="min-w-0 flex-1 pt-4rpx">
             <SkeletonBlock width="100%" height="26rpx" radius="6rpx" />
             <SkeletonBlock class="mt-12rpx" width="78%" height="26rpx" radius="6rpx" />
