@@ -1,6 +1,15 @@
 # 更新日志 
 
 
+## [0.2.0](https://github.com/Moonofweisheng/MyCookLikeHOC/compare/v0.1.0...v0.2.0) (2026-08-23)
+
+
+### ✨ Features | 新功能
+
+* ✨ 统一骨架屏视觉样式，增加语义变体支持 ([355da4b](https://github.com/Moonofweisheng/MyCookLikeHOC/commit/355da4b4579b5da8b22755014bd1a268ca2936ff))
+* 新增饭搭子值日抽签功能 ([49565ae](https://github.com/Moonofweisheng/MyCookLikeHOC/commit/49565aed3671629650fef6593a2c0711a724351a))
+* Introduce openspec-update-change and openspec-verify-change skills ([c20692b](https://github.com/Moonofweisheng/MyCookLikeHOC/commit/c20692b28de234fc81768812fb5308a13b154892))
+
 ## 0.1.0 (2026-07-13)
 
 
