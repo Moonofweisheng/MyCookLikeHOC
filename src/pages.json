@@ -55,6 +55,14 @@
       "style": {
         "navigationBarTitleText": "搜索菜谱"
       }
+    },
+    {
+      "path": "pages/dish-duty/index",
+      "type": "page",
+      "name": "dish-duty",
+      "style": {
+        "navigationBarTitleText": "今天谁刷碗"
+      }
     }
   ],
   "subPackages": [],

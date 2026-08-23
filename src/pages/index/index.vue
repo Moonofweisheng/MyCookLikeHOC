@@ -6,6 +6,7 @@ import CategoryShortcutSkeleton from '@/components/CategoryShortcutSkeleton.vue'
 import EmptyState from '@/components/EmptyState.vue'
 import RecipeCard from '@/components/RecipeCard.vue'
 import RecipeCardSkeleton from '@/components/RecipeCardSkeleton.vue'
+import DishDutyHomeCard from '@/components/dish-duty/DishDutyHomeCard.vue'
 
 definePage({
   name: 'home',
@@ -71,6 +72,10 @@ function goToSearch() {
   })
 }
 
+function goToDishDuty() {
+  router.push({ name: 'dish-duty' })
+}
+
 // 下拉刷新
 function onRefresh() {
   fetchRecommended()
@@ -128,6 +133,10 @@ onShareTimeline(() => {
           搜索
         </text>
       </view>
+    </view>
+
+    <view class="mt-30rpx px-24rpx">
+      <DishDutyHomeCard @select="goToDishDuty" />
     </view>
 
     <view class="px-32rpx pt-32rpx">
