@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="西兰花饭搭子">
+  <path d="M62 67h36l13 61c3 13-10 19-31 19s-34-6-31-19Z" fill="#a7d96d" stroke="#2f2f2d" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M43 78c-18 1-29-17-19-32 6-9 15-12 25-9 4-16 23-23 36-13 15-13 39-3 39 17 17 1 24 23 12 34-18 16-73 17-93 3Z" fill="#83c63f" stroke="#2f2f2d" stroke-width="8" stroke-linejoin="round"/>
+  <circle cx="69" cy="105" r="5" fill="#2f2f2d"/><circle cx="92" cy="105" r="5" fill="#2f2f2d"/>
+  <path d="M69 120c7 5 16 5 23 0" fill="none" stroke="#2f2f2d" stroke-width="6" stroke-linecap="round"/>
+</svg>

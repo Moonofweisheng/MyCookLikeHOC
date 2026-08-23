@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="番茄饭搭子">
+  <path d="M62 34c8-13 22-17 35-9l-4 13c22 4 38 22 38 47 0 31-21 51-51 51S29 116 29 85c0-26 17-44 40-48Z" fill="#ef7668" stroke="#2f2f2d" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M80 38 65 22l17 7 13-15-1 19 19 3-18 8-12 16-3-18-19 4Z" fill="#83c63f" stroke="#2f2f2d" stroke-width="7" stroke-linejoin="round"/>
+  <circle cx="64" cy="80" r="5" fill="#2f2f2d"/><circle cx="96" cy="80" r="5" fill="#2f2f2d"/>
+  <path d="M65 101c9 7 22 7 31-1" fill="none" stroke="#2f2f2d" stroke-width="6" stroke-linecap="round"/>
+  <path d="M27 102 13 113M133 102l14 11" fill="none" stroke="#2f2f2d" stroke-width="7" stroke-linecap="round"/>
+</svg>

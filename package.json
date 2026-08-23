@@ -53,6 +53,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "smoke:ui": "esno scripts/smoke-ui.ts",
+    "verify:dish-duty": "esno scripts/verify-dish-duty.ts",
     "postinstall": "npx simple-git-hooks",
     "prepare": "husky install",
     "commit": "git-cz",

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 90" role="img" aria-label="水流拖尾">
+  <path d="M15 55c48-45 102 20 154-13 42-27 78-23 116 9" fill="none" stroke="#2f2f2d" stroke-width="18" stroke-linecap="round" opacity=".95"/>
+  <path d="M15 49c48-39 101 25 154-8 42-26 78-21 116 9" fill="none" stroke="#88c9ff" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="43" cy="26" r="8" fill="#eaf4ff" stroke="#2f2f2d" stroke-width="4"/><circle cx="242" cy="19" r="6" fill="#eaf4ff" stroke="#2f2f2d" stroke-width="4"/>
+</svg>

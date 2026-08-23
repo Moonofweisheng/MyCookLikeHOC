@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 105" role="img" aria-label="洗碗海绵">
+  <path d="M26 26h93c11 0 19 8 19 19v34c0 10-8 18-19 18H26C15 97 8 89 8 79V45c0-11 7-19 18-19Z" fill="#ffd95c" stroke="#2f2f2d" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M13 47c33-14 88-14 120 0V31c0-11-8-19-19-19H31c-11 0-18 8-18 19Z" fill="#83c63f" stroke="#2f2f2d" stroke-width="8" stroke-linejoin="round"/>
+  <circle cx="38" cy="68" r="5" fill="#e0af30"/><circle cx="66" cy="79" r="4" fill="#e0af30"/><circle cx="101" cy="66" r="6" fill="#e0af30"/>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 180" role="img" aria-label="等待清洗的餐盘">
+  <ellipse cx="130" cy="102" rx="105" ry="58" fill="#88c9ff" opacity=".22"/>
+  <ellipse cx="130" cy="88" rx="105" ry="64" fill="#fffef9" stroke="#2f2f2d" stroke-width="9"/>
+  <ellipse cx="130" cy="88" rx="73" ry="40" fill="#eaf4ff" stroke="#2f2f2d" stroke-width="6"/>
+  <path d="M92 78c16-14 24 5 37-4 12-9 25 5 39-6M106 102c13 8 31 9 47 1" fill="none" stroke="#a66c42" stroke-width="11" stroke-linecap="round"/>
+  <circle cx="83" cy="99" r="8" fill="#f2a85c" stroke="#2f2f2d" stroke-width="4"/>
+  <circle cx="176" cy="88" r="7" fill="#ef7668" stroke="#2f2f2d" stroke-width="4"/>
+</svg>

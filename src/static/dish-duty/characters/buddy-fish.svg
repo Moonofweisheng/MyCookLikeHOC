@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="小鱼饭搭子">
+  <path d="M30 82c20-32 61-43 92-17l24-20-3 32 3 32-25-19c-29 26-70 17-91-8Z" fill="#88c9ff" stroke="#2f2f2d" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M66 59c9-14 22-21 34-22-3 13-10 23-21 30" fill="#ffd95c" stroke="#2f2f2d" stroke-width="7" stroke-linejoin="round"/>
+  <circle cx="61" cy="78" r="5" fill="#2f2f2d"/>
+  <path d="M45 94c8 5 16 5 23 0M85 85c9 7 19 8 29 2" fill="none" stroke="#2f2f2d" stroke-width="6" stroke-linecap="round"/>
+  <path d="M63 112c7 10 17 15 29 16" fill="none" stroke="#2f2f2d" stroke-width="7" stroke-linecap="round"/>
+</svg>

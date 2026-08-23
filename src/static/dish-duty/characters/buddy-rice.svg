@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="饭团饭搭子">
+  <path d="M80 20c15 0 48 55 53 83 4 23-18 34-53 34s-57-11-53-34C32 75 65 20 80 20Z" fill="#fffef9" stroke="#2f2f2d" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M57 99c13-7 33-7 46 0v36c-13 3-33 3-46 0Z" fill="#4f8425" stroke="#2f2f2d" stroke-width="7" stroke-linejoin="round"/>
+  <circle cx="65" cy="76" r="5" fill="#2f2f2d"/><circle cx="95" cy="76" r="5" fill="#2f2f2d"/>
+  <path d="M67 90c8 6 18 6 26 0" fill="none" stroke="#2f2f2d" stroke-width="6" stroke-linecap="round"/>
+  <path d="M35 113 18 103M125 113l17-10" fill="none" stroke="#2f2f2d" stroke-width="7" stroke-linecap="round"/>
+</svg>

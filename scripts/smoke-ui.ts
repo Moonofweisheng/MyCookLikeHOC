@@ -44,6 +44,20 @@ function main() {
     'src/pages/search/index.vue',
     'src/pages/recipe-detail/index.vue',
     'src/pages/about/index.vue',
+    'src/pages/dish-duty/index.vue',
+    'src/components/dish-duty/BuddySticker.vue',
+    'src/components/dish-duty/DishDutyStage.vue',
+    'src/components/dish-duty/DishDutyHomeCard.vue',
+    'src/store/dishDutyStore.ts',
+    'src/features/dish-duty/draw.ts',
+    'src/features/dish-duty/motion.ts',
+    'src/static/dish-duty/characters/buddy-egg.svg',
+    'src/static/dish-duty/characters/buddy-tomato.svg',
+    'src/static/dish-duty/plate-dirty.svg',
+    'src/static/dish-duty/sponge.svg',
+    'src/static/dish-duty/water-swoosh.svg',
+    'src/static/dish-duty/lottie/reveal.json',
+    'src/static/dish-duty/lottie/reveal-reduced.json',
     'src/layouts/tabbar.vue',
     '.agents/skills/cook-illustration-ui/SKILL.md',
   ]
@@ -104,6 +118,86 @@ function main() {
   assertIncludes('src/pages/recipe-detail/components/RecipeDetailSkeleton.vue', 'variant="image"')
   assertIncludes('src/pages/recipe-detail/components/RecipeDetailSkeleton.vue', 'variant="avatar"')
   assertIncludes('src/pages/index/index.vue', 'CategoryShortcutSkeleton')
+  assertIncludes('src/pages/index/index.vue', 'DishDutyHomeCard')
+  assertIncludes('src/pages/index/index.vue', 'goToDishDuty')
+  assertIncludes('src/pages/dish-duty/index.vue', 'dish-duty-hero cook-illo-card')
+  assertIncludes('src/pages/dish-duty/index.vue', '还没有饭搭子')
+  assertIncludes('src/pages/dish-duty/index.vue', '今天有谁吃饭')
+  assertIncludes('src/pages/dish-duty/index.vue', '添加饭搭子')
+  assertIncludes('src/pages/dish-duty/index.vue', '@click="openNewMember"')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', '跳过动效')
+  assertIncludes('src/pages/dish-duty/index.vue', 'result-card cook-illo-card')
+  assertIncludes('src/pages/dish-duty/index.vue', '再开一局')
+  assertIncludes('src/pages/dish-duty/index.vue', 'closeMemberEditor')
+  assertIncludes('src/pages/dish-duty/index.vue', 'redrawVisible = false')
+  assertIncludes('src/pages/dish-duty/index.vue', '今天有情况')
+  assertIncludes('src/pages/dish-duty/index.vue', 'requestDeleteMember')
+  assertIncludes('src/pages/dish-duty/index.vue', 'requestPurgeMember')
+  assertIncludes('src/pages/dish-duty/index.vue', '彻底删除这位饭搭子？')
+  assertIncludes('src/pages/dish-duty/index.vue', '确认彻底删除')
+  assertIncludes('src/pages/dish-duty/index.vue', '删除这位饭搭子？')
+  assertIncludes('src/pages/dish-duty/index.vue', 'sheet-close')
+  assertIncludes('src/pages/dish-duty/index.vue', '确认删除')
+  assertIncludes('src/pages/dish-duty/index.vue', '已删除 · 历史仍保留')
+  assertIncludes('src/pages/dish-duty/index.vue', '@click.stop')
+  assertNotIncludes('src/pages/dish-duty/index.vue', '@click.self')
+  assertIncludes('src/pages/dish-duty/index.vue', 'requestDeleteMeal')
+  assertNotIncludes('src/pages/dish-duty/index.vue', '临时加入')
+  assertNotIncludes('src/pages/dish-duty/index.vue', '仅本次有效')
+  assertNotIncludes('src/pages/dish-duty/index.vue', '保存为常用饭搭子')
+  assertNotIncludes('src/pages/dish-duty/index.vue', '先试玩一次')
+  assertNotIncludes('src/pages/dish-duty/index.vue', '常用饭搭子')
+  assertIncludes('src/pages/dish-duty/index.vue', '删除这条饭局记录？')
+  assertIncludes('src/pages/dish-duty/index.vue', '确认删除记录')
+  assertIncludes('src/pages/dish-duty/index.vue', 'formatMealTime(meal.createdAt)')
+  assertIncludes('src/pages/dish-duty/index.vue', '关于公平与数据')
+  assertIncludes('src/pages/dish-duty/index.vue', '本轮所有参与者机会均等')
+  assertNotIncludes('src/pages/dish-duty/index.vue', '近 7 天刷碗次数最少')
+  assertNotIncludes('src/pages/dish-duty/index.vue', '本局切换为等概率')
+  assertNotIncludes('src/pages/dish-duty/index.vue', '精简动效')
+  assertNotIncludes('src/pages/dish-duty/index.vue', 'motion-toggle')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'getParticipantMotionPath')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'buddy-vortex')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'foam-cloud')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'lottieHost')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'createLottieController')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'lottieController = createLottieController(')
+  assertNotIncludes('src/components/dish-duty/DishDutyStage.vue', 'if (!lottieHost.value) return')
+  assertNotIncludes('src/components/dish-duty/DishDutyStage.vue', 'replayReveal')
+  assertNotIncludes('src/components/dish-duty/DishDutyStage.vue', '重播动画')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'v-if="showFoam"')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'nextTick(() =>')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'revealRequested')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', '泡沫正在自动清场')
+  assertNotIncludes('src/components/dish-duty/DishDutyStage.vue', 'winner-result-stamp')
+  assertNotIncludes('src/components/dish-duty/DishDutyStage.vue', '本轮刷碗官')
+  assertIncludes('src/pages/dish-duty/index.vue', 'resultTitle')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'stage-revealed .plate-wrap')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', '.dish-stage.stage-revealed,')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'height: 500rpx')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', '.is-paused .stage-buddy')
+  assertNotIncludes('src/components/dish-duty/DishDutyStage.vue', '.is-paused *')
+  assertIncludes('src/components/dish-duty/DishDutyStage.vue', 'show-name')
+  assertIncludes('src/features/dish-duty/lottie.ts', 'loadAnimation')
+  assertIncludes('src/features/dish-duty/lottie.ts', 'fallbackDuration')
+  assertIncludes('src/features/dish-duty/lottie.ts', 'catch')
+  assertIncludes('src/static/dish-duty/lottie/reveal.json', 'foam-swirl')
+  assertIncludes('src/static/dish-duty/lottie/reveal.json', 'water-splash')
+  assertIncludes('src/static/dish-duty/lottie/reveal-reduced.json', 'short-clear')
+  assertNotIncludes('src/components/dish-duty/DishDutyStage.vue', 'buddy-shuffle')
+  assertNotIncludes('src/components/dish-duty/DishDutyStage.vue', 'foam-block')
+  assertIncludes('src/components/dish-duty/BuddySticker.vue', 'buddy-avatar')
+  assertNotIncludes('src/components/dish-duty/BuddySticker.vue', 'buddy-temp-mark')
+  assertNotIncludes('src/components/dish-duty/BuddySticker.vue', '临时饭搭子')
+  assertIncludes('src/store/dishDutyStore.ts', 'startDraw')
+  assertIncludes('src/store/dishDutyStore.ts', 'next.draft.participants.push(memberToParticipant(member))')
+  assertIncludes('src/store/dishDutyStore.ts', 'startNewMeal')
+  assertIncludes('src/store/dishDutyStore.ts', 'deleteMember')
+  assertIncludes('src/store/dishDutyStore.ts', 'purgeMember')
+  assertIncludes('src/store/dishDutyStore.ts', 'deleteMeal')
+  assertIncludes('src/features/dish-duty/draw.ts', 'mode: \'equal-random\'')
+  assertIncludes('src/store/dishDutyStore.ts', 'redraw')
+  assertIncludes('src/store/dishDutyStore.ts', 'DISH_DUTY_STORAGE_VERSION')
 
   assertIncludes('src/pages/recipe-detail/index.vue', 'getRecipeIdFromLocation')
   assertIncludes('src/pages/recipe-detail/index.vue', 'encodeURIComponent(recipeId.value)')

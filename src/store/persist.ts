@@ -34,5 +34,5 @@ function persist({ store }: PiniaPluginContext, excludedIds: string[]) {
 
 export function persistPlugin(context: PiniaPluginContext) {
   // 调用persist函数，并传入排除列表
-  persist(context, ['temp'])
+  persist(context, ['temp', 'dish-duty'])
 }

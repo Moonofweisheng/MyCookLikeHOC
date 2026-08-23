@@ -7,6 +7,7 @@ type _LocationUrl =
   "/pages/index/index" |
   "/pages/about/index" |
   "/pages/category/index" |
+  "/pages/dish-duty/index" |
   "/pages/recipe-detail/index" |
   "/pages/search/index";
 
