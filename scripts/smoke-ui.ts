@@ -125,6 +125,8 @@ function main() {
   assertIncludes('src/pages/dish-duty/index.vue', '今天有谁吃饭')
   assertIncludes('src/pages/dish-duty/index.vue', '添加饭搭子')
   assertIncludes('src/pages/dish-duty/index.vue', '@click="openNewMember"')
+  assertIncludes('src/composables/useGlobalToast.ts', 'zIndex: 200')
+  assertIncludes('src/pages/dish-duty/index.vue', '.sheet-mask { position: fixed; inset: 0; z-index: 120;')
   assertIncludes('src/components/dish-duty/DishDutyStage.vue', '跳过动效')
   assertIncludes('src/pages/dish-duty/index.vue', 'result-card cook-illo-card')
   assertIncludes('src/pages/dish-duty/index.vue', '再开一局')
