@@ -1,6 +1,18 @@
 # 更新日志 
 
 
+### [0.2.1](https://github.com/Moonofweisheng/MyCookLikeHOC/compare/v0.2.0...v0.2.1) (2026-08-24)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复弹层遮挡 Toast 提示 ([c33f5c8](https://github.com/Moonofweisheng/MyCookLikeHOC/commit/c33f5c82dae00d8339d01a050cc17c3ef9ae15cb))
+
+
+### ✨ Features | 新功能
+
+* 支持刷碗抽签分享到朋友圈 ([298942d](https://github.com/Moonofweisheng/MyCookLikeHOC/commit/298942d043a92c7ff9d78ea81979fdd1b1cd91cd))
+
 ## [0.2.0](https://github.com/Moonofweisheng/MyCookLikeHOC/compare/v0.1.0...v0.2.0) (2026-08-23)
 
 
