@@ -301,6 +301,12 @@ onShareAppMessage(() => ({
   title: currentWinner.value ? `今天轮到${currentWinner.value.nickname}刷碗` : '今天谁刷碗？来公平抽一个',
   path: '/pages/dish-duty/index',
 }))
+
+onShareTimeline(() => ({
+  title: showResult.value && currentWinner.value
+    ? `今天轮到${currentWinner.value.nickname}刷碗`
+    : '今天谁刷碗？来公平抽一个',
+}))
 </script>
 
 <template>

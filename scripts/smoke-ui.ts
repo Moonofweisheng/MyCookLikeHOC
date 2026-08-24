@@ -29,6 +29,19 @@ function assertNotIncludes(relativePath: string, unexpected: string) {
   }
 }
 
+function assertHookNotIncludes(relativePath: string, hookName: string, unexpected: string) {
+  const source = read(relativePath)
+  const hookStart = source.indexOf(`${hookName}(`)
+  const hookEnd = source.indexOf('\n}))', hookStart)
+  if (hookStart === -1 || hookEnd === -1) {
+    throw new Error(`${relativePath} 缺少可检查的 ${hookName} 钩子`)
+  }
+  const hookSource = source.slice(hookStart, hookEnd)
+  if (hookSource.includes(unexpected)) {
+    throw new Error(`${relativePath} 的 ${hookName} 不应包含: ${unexpected}`)
+  }
+}
+
 function main() {
   const requiredFiles = [
     'src/components/AppSectionHeader.vue',
@@ -125,6 +138,13 @@ function main() {
   assertIncludes('src/pages/dish-duty/index.vue', '今天有谁吃饭')
   assertIncludes('src/pages/dish-duty/index.vue', '添加饭搭子')
   assertIncludes('src/pages/dish-duty/index.vue', '@click="openNewMember"')
+  assertIncludes('src/pages/dish-duty/index.vue', 'onShareTimeline(() => ({')
+  assertIncludes('src/pages/dish-duty/index.vue', 'title: showResult.value && currentWinner.value')
+  assertIncludes('src/pages/dish-duty/index.vue', '? `今天轮到')
+  assertIncludes('src/pages/dish-duty/index.vue', 'currentWinner.value.nickname}刷碗`')
+  assertIncludes('src/pages/dish-duty/index.vue', ': \'今天谁刷碗？来公平抽一个\'')
+  assertHookNotIncludes('src/pages/dish-duty/index.vue', 'onShareTimeline', 'query:')
+  assertHookNotIncludes('src/pages/dish-duty/index.vue', 'onShareTimeline', 'path:')
   assertIncludes('src/composables/useGlobalToast.ts', 'zIndex: 200')
   assertIncludes('src/pages/dish-duty/index.vue', '.sheet-mask { position: fixed; inset: 0; z-index: 120;')
   assertIncludes('src/components/dish-duty/DishDutyStage.vue', '跳过动效')
