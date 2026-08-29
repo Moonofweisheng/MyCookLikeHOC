@@ -279,6 +279,21 @@ function verifyStore() {
   assert.equal(store.recentMeals[0]?.participants.some(participant => participant.nickname === '明哥'), true)
   assert.equal(store.purgeMember(firstId).ok, false)
 
+  const sixCharacters = store.addMember('六个字符昵称')
+  assert.equal(sixCharacters.ok, true)
+  assert.equal(sixCharacters.data?.nickname, '六个字符昵称')
+  const sevenCharacters = store.addMember('七个字符昵称超')
+  assert.equal(sevenCharacters.ok, false)
+  assert.match(sevenCharacters.error || '', /最多 6 个字/)
+  const blankNickname = store.addMember('   ')
+  assert.equal(blankNickname.ok, false)
+  assert.match(blankNickname.error || '', /起个名字/)
+  const duplicateNickname = store.addMember('六个字符昵称')
+  assert.equal(duplicateNickname.ok, false)
+  assert.match(duplicateNickname.error || '', /同名饭搭子/)
+  assert.equal(store.updateMember(sixCharacters.data?.id as string, { nickname: '编辑后昵称' }).ok, true)
+  assert.equal(store.members.find(member => member.id === sixCharacters.data?.id)?.nickname, '编辑后昵称')
+
   shouldFailStorage = true
   assert.equal(store.addMember('失败成员').ok, false)
   shouldFailStorage = false

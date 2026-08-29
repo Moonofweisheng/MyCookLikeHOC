@@ -32,6 +32,9 @@ const completing = ref(false)
 const pageActive = ref(true)
 const openingNewMeal = ref(false)
 
+const nicknameLength = computed(() => [...memberForm.nickname.trim()].length)
+const nicknameTooLong = computed(() => nicknameLength.value > 6)
+
 const participatingDraft = computed(() => draft.value?.participants.filter(item => item.status === 'participating') || [])
 const canDraw = computed(() => participatingDraft.value.length >= 2)
 const isFirstUse = computed(() => !currentMeal.value && activeMembers.value.length === 0 && !draft.value)
@@ -524,8 +527,11 @@ onShareTimeline(() => ({
           </text>
         </view>
         <view class="form-input mt-22rpx">
-          <input v-model="memberForm.nickname" :maxlength="6" placeholder="输入昵称，最多6个字">
+          <input v-model="memberForm.nickname" placeholder="输入昵称，最多6个字">
         </view>
+        <text v-if="nicknameTooLong" class="nickname-length-hint">
+          昵称最多 6 个字，请删减后再保存
+        </text>
         <text class="form-label">
           领一个专属角色
         </text>
@@ -662,6 +668,7 @@ onShareTimeline(() => ({
 .purge-button { background: var(--cook-danger); color: #fff; }
 .form-input { border: 4rpx solid var(--cook-ink); border-radius: 18rpx; background: #fff; padding: 17rpx 19rpx; box-shadow: 4rpx 5rpx 0 var(--cook-ink); }
 .form-input input { font-size: 26rpx; }
+.nickname-length-hint { display: block; margin-top: 12rpx; color: var(--cook-danger); font-size: 21rpx; font-weight: 900; }
 .form-label { display: block; margin-bottom: 12rpx; margin-top: 24rpx; color: var(--cook-text); font-size: 23rpx; font-weight: 900; }
 .role-scroll { width: 100%; white-space: nowrap; }
 .role-option { display: inline-flex; width: 116rpx; flex-shrink: 0; align-items: center; flex-direction: column; border: 4rpx solid transparent; border-radius: 22rpx; background: var(--cook-surface-2); padding: 8rpx; }
